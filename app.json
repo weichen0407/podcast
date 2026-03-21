@@ -3,7 +3,7 @@
     "name": "PodcastMobile",
     "slug": "PodcastMobile",
     "version": "1.0.0",
-    "scheme":"jerrypodcast",
+    "scheme": "jerrypodcast",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -26,10 +26,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png",
-        "bundler": "metro"
+      "bundler": "metro"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      "expo-web-browser"
     ]
   }
 }
