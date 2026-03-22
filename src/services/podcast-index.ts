@@ -49,3 +49,11 @@ export async function fetchFeedById(id: string): Promise<{ feed: Feed }> {
   const res = await fetchIndex(`/podcasts/byfeedid?id=${id}`);
   return res.json();
 }
+
+export async function fetchEpisodesByFeedId(
+  feedId: string,
+  max = 20,
+): Promise<{ items: Episode[] }> {
+  const res = await fetchIndex(`/episodes/byfeedid?id=${feedId}&max=${max}`);
+  return res.json();
+}
