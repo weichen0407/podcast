@@ -1,17 +1,33 @@
-import { Button, ScrollView, Text } from "react-native";
+import {
+  ActivityIndicator,
+  Button,
+  FlatList,
+  ScrollView,
+  Text,
+} from "react-native";
 
 import { fetchTrending } from "@/services/podcast-index";
+import { useQuery } from "@tanstack/react-query";
 
 export default function HomeScreen() {
-  const onPress = async () => {
-    const data = await fetchTrending();
-    console.log(JSON.stringify(data, null, 2));
-  };
-  return (
-    <ScrollView contentInsetAdjustmentBehavior="automatic">
-      <Text>Home</Text>
+  const { data, isLoading, error } = useQuery({
+    queryKey: [],
+    queryFn: () => fetchTrending(),
+  });
 
-      <Button title="Fetch trending" onPress={onPress} />
-    </ScrollView>
+  if (isLoading) {
+    return <ActivityIndicator />;
+  }
+
+  if (error) {
+    <Text>Failed to fetch trending</Text>;
+  }
+
+  return (
+    <FlatList
+      data={data?.feeds}
+      renderItem={({ item }) => <Text>{item.title}</Text>}
+      contentInsetAdjustmentBehavior="automatic"
+    ></FlatList>
   );
 }
