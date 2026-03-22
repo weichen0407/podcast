@@ -1,5 +1,5 @@
-import * as Crypto from 'expo-crypto';
-import type { Episode, Feed } from '../types';
+import * as Crypto from "expo-crypto";
+import type { Episode, Feed } from "../types";
 export type { Episode, Feed };
 
 var apiKey = process.env.EXPO_PUBLIC_PODCAST_INDEX_API_KEY;
@@ -7,7 +7,7 @@ var apiSecret = process.env.EXPO_PUBLIC_PODCAST_INDEX_API_SECRET;
 
 if (!apiKey || !apiSecret) {
   throw new Error(
-    'EXPO_PUBLIC_PODCAST_INDEX_API_KEY or EXPO_PUBLIC_PODCAST_INDEX_API_SECRET is not defined',
+    "EXPO_PUBLIC_PODCAST_INDEX_API_KEY or EXPO_PUBLIC_PODCAST_INDEX_API_SECRET is not defined",
   );
 }
 
@@ -25,11 +25,11 @@ const fetchIndex = async (path: string, options: RequestInit = {}) => {
 
   const optionsWithAuth = {
     ...options,
-    method: options.method || 'get',
+    method: options.method || "get",
     headers: {
-      'User-Agent': 'notJustPodcast/1.0',
-      'X-Auth-Date': '' + time,
-      'X-Auth-Key': apiKey,
+      "User-Agent": "notJustPodcast/1.0",
+      "X-Auth-Date": "" + time,
+      "X-Auth-Key": apiKey,
       Authorization: authHash,
       ...options.headers,
     },
@@ -42,5 +42,10 @@ const fetchIndex = async (path: string, options: RequestInit = {}) => {
 
 export async function fetchTrending(): Promise<{ feeds: Feed[] }> {
   const res = await fetchIndex(`/podcasts/trending`);
+  return res.json();
+}
+
+export async function fetchFeedById(id: string): Promise<{ feed: Feed }> {
+  const res = await fetchIndex(`/podcasts/byfeedid?id=${id}`);
   return res.json();
 }
